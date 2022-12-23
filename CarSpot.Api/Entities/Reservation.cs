@@ -1,11 +1,30 @@
-﻿namespace CarSpot.Api.Entities
+﻿using CarSpot.Api.Exceptions;
+
+namespace CarSpot.Api.Entities
 {
     public class Reservation
     {
-        public int ReservationId { get; set; }
-        public string BookerName { get; set; }
-        public string ParkingSpotName { get; set; }
-        public string LicensePlate { get; set; }
-        public DateTime ReservationDate { get; set; }
+        public int ReservationId { get; private set; }
+        public string BookerName { get; private set; }
+        public string LicensePlate { get; private set; }
+        public DateTime ReservationDate { get; private set; }
+
+        public Reservation(int reservationId, string bookerName, string licensePlate, DateTime reservationDate)
+        {
+            ReservationId = reservationId;
+            BookerName = bookerName;
+           ChangeLicensePlate(licensePlate);
+            ReservationDate = reservationDate; 
+        }
+
+        public void ChangeLicensePlate(string licensePlate)
+        {
+            if(string.IsNullOrWhiteSpace(licensePlate))
+            {
+                throw new EmptyLicensePlateException();
+            }
+
+            LicensePlate = licensePlate;
+        }
     }
 }

@@ -28,7 +28,17 @@ namespace CarSpot.Api.Services
 
         public int? Create(Reservation reservation)
         {
+
+            var now = DateTime.UtcNow.Date;
+            var pastDays = now.DayOfWeek is DayOfWeek.Sunday ? 7 : (int)now.DayOfWeek;
+            var remainingDays = 7 - pastDays;
+
             if (_parkingSpot.All(x => x != reservation.ParkingSpotName))
+            {
+                return default;
+            }
+
+            if(!(reservation.ReservationDate.Date >= now && reservation.ReservationDate.Date <= now.AddDays(remainingDays)))
             {
                 return default;
             }
@@ -41,7 +51,6 @@ namespace CarSpot.Api.Services
             }
 
             reservation.ReservationId = _id;
-            reservation.ReservationDate = DateTime.UtcNow.AddDays(1).Date;
             _id++;
 
             _reservations.Add(reservation);
@@ -53,6 +62,11 @@ namespace CarSpot.Api.Services
         {
             var existingReservation = _reservations.SingleOrDefault(x => x.ReservationId == reservation.ReservationId);
             if (existingReservation is null)
+            {
+                return false;
+            }
+
+            if(existingReservation.ReservationDate <= DateTime.UtcNow)
             {
                 return false;
             }
