@@ -1,4 +1,5 @@
 ﻿using CarSpot.Api.Exceptions;
+using System.Linq.Expressions;
 
 namespace CarSpot.Api.Entities
 {
@@ -31,8 +32,15 @@ namespace CarSpot.Api.Entities
 
             if(reservationAlreadyExist)
             {
-
+                throw new ParkingSpotAlreadyReservedException(Spot_Name, reservation.ReservationDate);
             }
+
+            _reservations.Add(reservation); 
+        }
+
+      public void RemoveReservation(Guid ReservationId, Reservation reservation)
+        {
+            _reservations.Remove(reservation);
         }
     }
 }

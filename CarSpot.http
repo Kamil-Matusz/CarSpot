@@ -1,0 +1,24 @@
+@url = http://localhost:5019
+@reservationId = 00000000-0000-0000-0000-000000000001
+@parkingSpotId = 00000000-0000-0000-0000-000000000001
+
+###
+GET {{url}}
+
+###
+GET  {{url}}/reservations
+
+###
+GET {{url}}/reservations/{{reservationId}}
+
+###
+POST {{url}}/reservations
+Content-Type: application/json
+
+{
+    "ParkingSpotId" : "00000000-0000-0000-0000-000000000001",
+    "BookerName": "John Doe",
+    "LicensePlate" : "XYZ123",
+    "ReservationDate" : "2022-12-26"
+}
+
