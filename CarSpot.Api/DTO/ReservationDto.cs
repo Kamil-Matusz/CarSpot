@@ -1,10 +1,12 @@
-﻿namespace CarSpot.Api.DTO
+﻿using CarSpot.Api.ValueObject;
+
+namespace CarSpot.Api.DTO
 {
     public class ReservationDto
     {
-        public Guid ReservationDtoId { get; set; }
-        public Guid ParkingSpotId { get; set; }
-        public string BookerName { get; set; }
-        public DateTime ReservationDate { get; set; }
+        public ReservationId ReservationDtoId { get; set; }
+        public ParkingSpotId ParkingSpotId { get; set; }
+        public BookerName BookerName { get; set; }
+        public Date ReservationDate { get; set; }
     }
 }
