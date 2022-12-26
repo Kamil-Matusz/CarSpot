@@ -1,27 +1,21 @@
-﻿using CarSpot.Api.Commands;
-using CarSpot.Api.DTO;
-using CarSpot.Api.Entities;
+﻿using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarSpot.Api.Controllers
 {
-    [Route("reservations")]
     [ApiController]
+    [Route("reservations")]
     public class ReservationsController : ControllerBase
     {
-        private readonly ReservationsService _reservationService = new();
-
+       private readonly ReservationsService _reservationsService = new();
         [HttpGet]
-        public ActionResult<IEnumerable<ReservationDto>> Get()
-        {
-            return Ok(_reservationService.GetAllWeekly());
-        }
+        public ActionResult<IEnumerable<Reservation>> GetAll() => Ok(_reservationsService.GetAll());
 
-        [HttpGet("{id:guid}")]
-        public ActionResult<ReservationDto> Get(Guid id)
+        [HttpGet("{id:int}")]
+        public ActionResult<Reservation> Get(int id)
         {
-           var reservation = _reservationService.Get(id);
+           var reservation = _reservationsService.Get(id);
             if(reservation is null)
             {
                 return NotFound();
@@ -30,33 +24,37 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(CreateReservation command)
+        public ActionResult Post(Reservation reservation)
         {
-            var id = _reservationService.Create(command with { ReservationId = Guid.NewGuid()});
+            var id =  _reservationsService.Create(reservation);
             if(id is null)
             {
                 return BadRequest();
             }
-            return CreatedAtAction(nameof(Get), new {id}, null);
+
+            return CreatedAtAction(nameof(Get), new { id = reservation.ReservationId }, null);
         }
 
-        [HttpPut("{id:guid}")]
-        public ActionResult Put(Guid id,ChangeReservationLicensePlate command)
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Reservation reservation)
         {
-            if(_reservationService.Update(command with {ReservationId = id }))
+            reservation.ReservationId = id;
+            if(_reservationsService.Update(reservation))
             {
                 return NoContent();
             }
+
             return NotFound();
         }
 
-        [HttpDelete("{id:guid}")]
-        public ActionResult Delete(Guid id)
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
         {
-            if (_reservationService.Delete(new DeleteReservation(id)))
+            if (_reservationsService.Delete(id))
             {
                 return NoContent();
             }
+
             return NotFound();
         }
     }
