@@ -10,10 +10,10 @@ namespace CarSpot.Api.Controllers
     {
        private readonly ReservationsService _reservationsService = new();
         [HttpGet]
-        public ActionResult<IEnumerable<Reservation>> GetAll() => Ok(_reservationsService.GetAll());
+        public ActionResult<IEnumerable<Reservation>> GetAll() => Ok(_reservationsService.GetAllWeekly());
 
-        [HttpGet("{id:int}")]
-        public ActionResult<Reservation> Get(int id)
+        [HttpGet("{id:guid}")]
+        public ActionResult<Reservation> Get(Guid id)
         {
            var reservation = _reservationsService.Get(id);
             if(reservation is null)
@@ -35,8 +35,8 @@ namespace CarSpot.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = reservation.ReservationId }, null);
         }
 
-        [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Reservation reservation)
+        [HttpPut("{id:guid}")]
+        public ActionResult Put(Guid id, Reservation reservation)
         {
             reservation.ReservationId = id;
             if(_reservationsService.Update(reservation))
@@ -47,8 +47,8 @@ namespace CarSpot.Api.Controllers
             return NotFound();
         }
 
-        [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        [HttpDelete("{id:guid")]
+        public ActionResult Delete(Guid id)
         {
             if (_reservationsService.Delete(id))
             {
