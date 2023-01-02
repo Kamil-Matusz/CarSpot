@@ -10,7 +10,12 @@ namespace CarSpot.Api.Controllers
     [Route("reservations")]
     public class ReservationsController : ControllerBase
     {
-        private readonly ReservationsService _reservationsService = new();
+        private readonly IReservationsService _reservationsService;
+
+        public ReservationsController(IReservationsService reservationsService)
+        {
+            _reservationsService= reservationsService;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<ReservationDto>> GetAll() => Ok(_reservationsService.GetAllWeekly());

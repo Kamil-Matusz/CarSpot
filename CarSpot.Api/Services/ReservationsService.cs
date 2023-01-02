@@ -4,15 +4,15 @@ using CarSpot.Api.Entities;
 
 namespace CarSpot.Api.Services
 {
-    public class ReservationsService
+    public class ReservationsService : IReservationsService
     {
-        private static readonly Clock _clock = new();
-        private static readonly List<WeeklyParkingSpot> _weeklyParkingSpots = new()
+        private readonly IClock _clock;
+        private readonly IEnumerable<WeeklyParkingSpot> _weeklyParkingSpots;
+        public ReservationsService(IClock clock, IEnumerable<WeeklyParkingSpot> weeklyParkingSpots)
         {
-           new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"),_clock.CurrentDate(),_clock.CurrentDate().AddDays(7),"P1"),
-           new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"),_clock.CurrentDate(),_clock.CurrentDate().AddDays(7),"P2"),
-           new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"),_clock.CurrentDate(),_clock.CurrentDate().AddDays(7),"P3"),
-        };
+            _clock = clock;
+            _weeklyParkingSpots = weeklyParkingSpots;
+        }
 
         public ReservationDto Get(Guid id)
         {
