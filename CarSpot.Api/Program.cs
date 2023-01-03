@@ -1,5 +1,7 @@
 using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Application;
+using CarSpot.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,9 @@ builder.Services
         new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P3"),
     };
     })
-    .AddSingleton<IReservationsService,ReservationsService>()
+    //.AddScoped<IReservationsService,ReservationsService>()
+    .AddApplication()
+    //.AddInfrastructure()
     .AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

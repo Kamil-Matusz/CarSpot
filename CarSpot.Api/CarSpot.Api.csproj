@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarSpot.Core\CarSpot.Core.csproj" />
+    <ProjectReference Include="..\CarSpot.Infrastructure\CarSpot.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
