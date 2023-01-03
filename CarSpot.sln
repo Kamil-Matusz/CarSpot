@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSpot.Api", "CarSpot.Api\CarSpot.Api.csproj", "{2DF05471-4E98-4957-8BA1-9985D7509E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSpot.Tests", "CarSpot.Tests\CarSpot.Tests.csproj", "{94DE1D08-12AC-460E-905B-BE842D6F686A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSpot.Tests", "CarSpot.Tests\CarSpot.Tests.csproj", "{94DE1D08-12AC-460E-905B-BE842D6F686A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSpot.Core", "CarSpot.Core\CarSpot.Core.csproj", "{966623AE-A4C1-4C01-A7F9-358C6514DE6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{94DE1D08-12AC-460E-905B-BE842D6F686A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94DE1D08-12AC-460E-905B-BE842D6F686A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94DE1D08-12AC-460E-905B-BE842D6F686A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966623AE-A4C1-4C01-A7F9-358C6514DE6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966623AE-A4C1-4C01-A7F9-358C6514DE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966623AE-A4C1-4C01-A7F9-358C6514DE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966623AE-A4C1-4C01-A7F9-358C6514DE6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

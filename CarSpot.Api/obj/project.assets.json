@@ -269,6 +269,16 @@
             "rid": "win"
           }
         }
+      },
+      "CarSpot.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CarSpot.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CarSpot.Core.dll": {}
+        }
       }
     }
   },
@@ -791,41 +801,60 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "CarSpot.Core/1.0.0": {
+      "type": "project",
+      "path": "../CarSpot.Core/CarSpot.Core.csproj",
+      "msbuildProject": "../CarSpot.Core/CarSpot.Core.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "CarSpot.Core >= 1.0.0",
       "Shouldly >= 4.1.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kamil\\.nuget\\packages\\": {}
+    "C:\\Users\\K-Notebook\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj",
+      "projectUniqueName": "C:\\Users\\K-Notebook\\source\\repos\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj",
       "projectName": "CarSpot.Api",
-      "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj",
-      "packagesPath": "C:\\Users\\Kamil\\.nuget\\packages\\",
-      "outputPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Api\\obj\\",
+      "projectPath": "C:\\Users\\K-Notebook\\source\\repos\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj",
+      "packagesPath": "C:\\Users\\K-Notebook\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\K-Notebook\\source\\repos\\CarSpot\\CarSpot.Api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Kamil\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\K-Notebook\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\K-Notebook\\source\\repos\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj": {
+              "projectPath": "C:\\Users\\K-Notebook\\source\\repos\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -866,7 +895,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
