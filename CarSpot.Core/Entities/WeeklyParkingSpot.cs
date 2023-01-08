@@ -4,12 +4,12 @@ namespace CarSpot.Api.Entities
 {
     public class WeeklyParkingSpot
     {
-        private readonly HashSet<Reservation> _weeklyParkingSpots = new();
+        private HashSet<Reservation> _weeklyParkingSpots = new();
 
-        public Guid WeeklyParkingSpotId { get;  }
-        public DateTime FromDate { get; private set; }
-        public DateTime ToDate { get; private set; }
-        public string ParkingSpotName { get; private set; }
+        public Guid WeeklyParkingSpotId { get;  set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get;  set; }
+        public string ParkingSpotName { get; set; }
         public IEnumerable<Reservation> Reservations => _weeklyParkingSpots;
 
         public WeeklyParkingSpot(Guid weeklyParkingSpotId, DateTime fromDate, DateTime toDate, string parkingSpotName)

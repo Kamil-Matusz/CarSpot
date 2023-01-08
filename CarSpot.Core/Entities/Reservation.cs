@@ -4,7 +4,7 @@ namespace CarSpot.Api.Entities
 {
     public class Reservation
     {
-        public Guid ReservationId { get; }
+        public Guid ReservationId { get; private set; }
         public Guid ParkingSpotId { get; private set; }
         public string BookerName { get; private set; }
         public string LicensePlate { get; private set; }

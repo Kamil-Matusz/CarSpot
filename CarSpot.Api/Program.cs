@@ -2,6 +2,8 @@ using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
 using CarSpot.Application;
 using CarSpot.Infrastructure;
+using CarSpot.Infrastructure.DAL;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,7 @@ builder.Services
     })
     //.AddScoped<IReservationsService,ReservationsService>()
     .AddApplication()
-    //.AddInfrastructure()
+    .AddInfrastructure()
     .AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -41,5 +43,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope()) {
+    var dbContext = scope.ServiceProvider.GetRequiredService<CarSpotDbContext>();
+    dbContext.Database.Migrate();
+}
+
 
 app.Run();

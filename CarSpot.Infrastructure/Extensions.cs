@@ -1,4 +1,5 @@
-﻿using CarSpot.Api.Repositories;
+﻿
+using CarSpot.Infrastructure.DAL;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace CarSpot.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddSingleton<IWeeklyParkingSpotRepository>();
+            services
+                .AddPostgres();
 
             return services;
         }
