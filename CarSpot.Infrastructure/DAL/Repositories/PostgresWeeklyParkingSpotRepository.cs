@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Core.Repositories;
+using CarSpot.Core.ValueObject;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace CarSpot.Infrastructure.DAL.Repositories
             _dbContext.SaveChanges();
         }
 
-        public WeeklyParkingSpot Get(Guid id) => _dbContext.WeeklyParkingSpots
+        public WeeklyParkingSpot Get(ParkingSpotId id) => _dbContext.WeeklyParkingSpots
             .Include(x => x.Reservations)
             .SingleOrDefault(x => x.WeeklyParkingSpotId== id);
 

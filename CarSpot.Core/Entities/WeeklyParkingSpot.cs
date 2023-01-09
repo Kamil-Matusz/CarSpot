@@ -1,4 +1,5 @@
 ﻿using CarSpot.Api.Exceptions;
+using CarSpot.Core.ValueObject;
 
 namespace CarSpot.Api.Entities
 {
@@ -6,13 +7,13 @@ namespace CarSpot.Api.Entities
     {
         private HashSet<Reservation> _weeklyParkingSpots = new();
 
-        public Guid WeeklyParkingSpotId { get;  set; }
+        public ParkingSpotId WeeklyParkingSpotId { get;  set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get;  set; }
         public string ParkingSpotName { get; set; }
         public IEnumerable<Reservation> Reservations => _weeklyParkingSpots;
 
-        public WeeklyParkingSpot(Guid weeklyParkingSpotId, DateTime fromDate, DateTime toDate, string parkingSpotName)
+        public WeeklyParkingSpot(ParkingSpotId weeklyParkingSpotId, DateTime fromDate, DateTime toDate, string parkingSpotName)
         {
             WeeklyParkingSpotId = weeklyParkingSpotId;
             FromDate = fromDate;

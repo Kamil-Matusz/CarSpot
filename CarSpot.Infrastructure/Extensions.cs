@@ -1,4 +1,5 @@
 ﻿
+using CarSpot.Api.Services;
 using CarSpot.Infrastructure.DAL;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -14,6 +15,7 @@ namespace CarSpot.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services
+                .AddSingleton<IClock,Clock>()
                 .AddPostgres();
 
             return services;

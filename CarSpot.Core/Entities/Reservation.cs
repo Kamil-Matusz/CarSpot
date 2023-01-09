@@ -1,16 +1,17 @@
 ﻿using CarSpot.Api.Exceptions;
+using CarSpot.Core.ValueObject;
 
 namespace CarSpot.Api.Entities
 {
     public class Reservation
     {
         public Guid ReservationId { get; private set; }
-        public Guid ParkingSpotId { get; private set; }
+        public ParkingSpotId ParkingSpotId { get; private set; }
         public string BookerName { get; private set; }
         public string LicensePlate { get; private set; }
         public DateTime ReservationDate { get; private set; }
 
-        public Reservation(Guid reservationId,Guid parkingSpotId, string bookerName, string licensePlate, DateTime reservationDate)
+        public Reservation(Guid reservationId,ParkingSpotId parkingSpotId, string bookerName, string licensePlate, DateTime reservationDate)
         {
             ReservationId = reservationId;
             ParkingSpotId= parkingSpotId;

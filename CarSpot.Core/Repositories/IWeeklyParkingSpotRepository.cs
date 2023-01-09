@@ -1,4 +1,5 @@
 ﻿using CarSpot.Api.Entities;
+using CarSpot.Core.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CarSpot.Core.Repositories
 {
     public interface IWeeklyParkingSpotRepository
     {
-        WeeklyParkingSpot Get(Guid id);
+        WeeklyParkingSpot Get(ParkingSpotId id);
         IEnumerable<WeeklyParkingSpot> GetAllWeekly();
         void Add(WeeklyParkingSpot weeklyParkingSpot);
         void Update(WeeklyParkingSpot weeklyParkingSpot);

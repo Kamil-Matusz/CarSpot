@@ -18,6 +18,7 @@ namespace CarSpot.Infrastructure.DAL
             const string connectionString = "Host=localhost;Database=CarSpot;Username=postgres;Password=";
             services.AddDbContext<CarSpotDbContext>(x => x.UseNpgsql(connectionString));
             services.AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>();
+            AppContext.SetSwitch("Npg.EnableLegacyTimestampBehavior", true);
 
             return services;
         }

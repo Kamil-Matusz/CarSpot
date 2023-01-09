@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CarSpot.Core\CarSpot.Core.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="CarSpot.Tests"/>
+	</ItemGroup>
+
 </Project>
