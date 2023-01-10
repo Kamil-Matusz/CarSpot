@@ -20,8 +20,8 @@ namespace CarSpot.Api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<ReservationDto>> GetAll() => Ok(_reservationsService.GetAllWeekly());
 
-        [HttpGet("{id:guid}")]
-        public ActionResult<ReservationDto> Get(Guid id)
+        [HttpGet("{id:int}")]
+        public ActionResult<ReservationDto> Get(int id)
         {
            var reservation = _reservationsService.Get(id);
             if(reservation is null)
@@ -34,7 +34,7 @@ namespace CarSpot.Api.Controllers
         [HttpPost]
         public ActionResult Post(CreateReservation command)
         {
-            var id =  _reservationsService.Create(command with { ReservationId = Guid.NewGuid()});
+            var id =  _reservationsService.Create(command with { ReservationId = command.ReservationId });
             if(id is null)
             {
                 return BadRequest();
@@ -44,7 +44,7 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public ActionResult Put(Guid id, ChangeReservationLicencePlate command)
+        public ActionResult Put(int id, ChangeReservationLicencePlate command)
         {
             
             if(_reservationsService.Update(command with { ReservationId = id}))
@@ -55,8 +55,8 @@ namespace CarSpot.Api.Controllers
             return NotFound();
         }
 
-        [HttpDelete("{id:guid}")]
-        public ActionResult Delete(Guid id)
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
         {
             if (_reservationsService.Delete(new DeleteReservation(id)))
             {

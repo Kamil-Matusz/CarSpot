@@ -10,7 +10,7 @@ namespace CarSpot.Core.Repositories
 {
     public interface IWeeklyParkingSpotRepository
     {
-        WeeklyParkingSpot Get(ParkingSpotId id);
+        WeeklyParkingSpot Get(int id);
         IEnumerable<WeeklyParkingSpot> GetAllWeekly();
         void Add(WeeklyParkingSpot weeklyParkingSpot);
         void Update(WeeklyParkingSpot weeklyParkingSpot);

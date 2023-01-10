@@ -2,5 +2,5 @@
 
 namespace CarSpot.Api.Commands
 {
-    public record DeleteReservation(Guid ReservationId);
+    public record DeleteReservation(int ReservationId);
 }

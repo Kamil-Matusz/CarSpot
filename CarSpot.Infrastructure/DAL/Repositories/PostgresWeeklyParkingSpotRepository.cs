@@ -30,7 +30,7 @@ namespace CarSpot.Infrastructure.DAL.Repositories
             _dbContext.SaveChanges();
         }
 
-        public WeeklyParkingSpot Get(ParkingSpotId id) => _dbContext.WeeklyParkingSpots
+        public WeeklyParkingSpot Get(int id) => _dbContext.WeeklyParkingSpots
             .Include(x => x.Reservations)
             .SingleOrDefault(x => x.WeeklyParkingSpotId== id);
 

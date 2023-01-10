@@ -2,5 +2,5 @@
 
 namespace CarSpot.Api.Commands
 {
-    public record ChangeReservationLicencePlate(Guid ReservationId, string LicencePlate);
+    public record ChangeReservationLicencePlate(int ReservationId, string LicencePlate);
 }

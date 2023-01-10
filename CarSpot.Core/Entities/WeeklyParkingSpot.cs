@@ -7,13 +7,13 @@ namespace CarSpot.Api.Entities
     {
         private HashSet<Reservation> _weeklyParkingSpots = new();
 
-        public ParkingSpotId WeeklyParkingSpotId { get;  set; }
+        public int WeeklyParkingSpotId { get;  set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get;  set; }
         public string ParkingSpotName { get; set; }
         public IEnumerable<Reservation> Reservations => _weeklyParkingSpots;
 
-        public WeeklyParkingSpot(ParkingSpotId weeklyParkingSpotId, DateTime fromDate, DateTime toDate, string parkingSpotName)
+        public WeeklyParkingSpot(int weeklyParkingSpotId, DateTime fromDate, DateTime toDate, string parkingSpotName)
         {
             WeeklyParkingSpotId = weeklyParkingSpotId;
             FromDate = fromDate;
@@ -38,7 +38,7 @@ namespace CarSpot.Api.Entities
             _weeklyParkingSpots.Add(reservation);
         }
 
-        public void RemoveReservation(Guid reservationId) => _weeklyParkingSpots.RemoveWhere(x => x.ReservationId== reservationId);
+        public void RemoveReservation(int reservationId) => _weeklyParkingSpots.RemoveWhere(x => x.ReservationId== reservationId);
 
     }
 }

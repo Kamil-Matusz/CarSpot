@@ -5,13 +5,13 @@ namespace CarSpot.Api.Entities
 {
     public class Reservation
     {
-        public Guid ReservationId { get; private set; }
-        public ParkingSpotId ParkingSpotId { get; private set; }
+        public int ReservationId { get; private set; }
+        public int ParkingSpotId { get; private set; }
         public string BookerName { get; private set; }
         public string LicensePlate { get; private set; }
         public DateTime ReservationDate { get; private set; }
 
-        public Reservation(Guid reservationId,ParkingSpotId parkingSpotId, string bookerName, string licensePlate, DateTime reservationDate)
+        public Reservation(int reservationId,int parkingSpotId, string bookerName, string licensePlate, DateTime reservationDate)
         {
             ReservationId = reservationId;
             ParkingSpotId= parkingSpotId;

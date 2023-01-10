@@ -19,9 +19,9 @@ namespace CarSpot.Core.Repositories
             _clock= clock;
             _weeklyParkingSpots = new List<WeeklyParkingSpot>()
             {
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P3"),
+            new WeeklyParkingSpot(1, _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P1"),
+            new WeeklyParkingSpot(2, _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P2"),
+            new WeeklyParkingSpot(3, _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P3"),
             };
         }
         public void Add(WeeklyParkingSpot weeklyParkingSpot) => _weeklyParkingSpots.Add(weeklyParkingSpot);
@@ -31,7 +31,7 @@ namespace CarSpot.Core.Repositories
             throw new NotImplementedException();
         }
 
-        public WeeklyParkingSpot Get(ParkingSpotId id) => _weeklyParkingSpots.SingleOrDefault(x => x.WeeklyParkingSpotId== id);
+        public WeeklyParkingSpot Get(int id) => _weeklyParkingSpots.SingleOrDefault(x => x.WeeklyParkingSpotId== id);
 
         public IEnumerable<WeeklyParkingSpot> GetAllWeekly() => _weeklyParkingSpots;
 

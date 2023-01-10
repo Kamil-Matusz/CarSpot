@@ -45,9 +45,9 @@ using (var scope = app.Services.CreateScope()) {
         var clock = new Clock();
         weeklyParkingSpot = new List<WeeklyParkingSpot>()
             {
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P3"),
+            new WeeklyParkingSpot(1, clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P1"),
+            new WeeklyParkingSpot(2, clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P2"),
+            new WeeklyParkingSpot(3, clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P3"),
             };
         dbContext.AddRange(weeklyParkingSpot);
         dbContext.SaveChanges();

@@ -15,8 +15,8 @@ namespace CarSpot.Infrastructure.DAL.Configurations
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {
             builder.HasKey(x => x.ReservationId);
-            builder.Property(x => x.ParkingSpotId)
-                .HasConversion(x => x.Value, x => new ParkingSpotId(x));
+            /*builder.Property(x => x.ParkingSpotId)
+                .HasConversion(x => x.Value, x => new ParkingSpotId(x));*/
         }
     }
 }
