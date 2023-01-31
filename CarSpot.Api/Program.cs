@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCore()
     .AddApplication()
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -33,26 +33,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-// auto migration if don't exist
-using (var scope = app.Services.CreateScope()) {
-    var dbContext = scope.ServiceProvider.GetRequiredService<CarSpotDbContext>();
-    dbContext.Database.Migrate();
-
-    var weeklyParkingSpot = dbContext.WeeklyParkingSpots.ToList();
-    if(!weeklyParkingSpot.Any())
-    {
-        var clock = new Clock();
-        weeklyParkingSpot = new List<WeeklyParkingSpot>()
-            {
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P3"),
-            };
-        dbContext.AddRange(weeklyParkingSpot);
-        dbContext.SaveChanges();
-    }
-}
 
 
 app.Run();
