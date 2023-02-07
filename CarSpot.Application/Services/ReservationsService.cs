@@ -16,7 +16,7 @@ namespace CarSpot.Api.Services
             _weeklyParkingSpotRepository = weeklyParkingSpotRepository;
         }
 
-        public ReservationDto Get(Guid id)
+        /*public ReservationDto Get(Guid id)
         {
             return GetAllWeekly().SingleOrDefault(x => x.ReservationDtoId== id);
         }
@@ -94,5 +94,90 @@ namespace CarSpot.Api.Services
         }
 
         private WeeklyParkingSpot GetWeeklyParkingSpotByReservation(Guid reservationId) => _weeklyParkingSpotRepository.GetAllWeekly().SingleOrDefault(x => x.Reservations.Any(r => r.ReservationId == reservationId));
+    }*/
+
+        public async Task<ReservationDto> GetAsync(Guid id)
+        {
+            var reservations = await GetAllWeeklyAsync();
+            return reservations.SingleOrDefault(x => x.ReservationDtoId == id);
+        }
+
+        public async Task<IEnumerable<ReservationDto>> GetAllWeeklyAsync()
+        {
+            var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetAllWeeklyAsync();
+            
+            return weeklyParkingSpots.SelectMany(x => x.Reservations)
+            .Select(x => new ReservationDto
+            {
+                ReservationDtoId = x.ReservationId,
+                ParkingSpotId = x.ParkingSpotId,
+                BookerName = x.BookerName,
+                ReservationDate = x.ReservationDate
+            });
+        }
+
+
+        public async Task<Guid?> CreateAsync(CreateReservation command)
+        {
+            var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
+            var weeklyParkingSpot = await _weeklyParkingSpotRepository.GetAsync(parkingSpotId);
+            if (weeklyParkingSpot is null)
+            {
+                return default;
+            }
+
+            var reservation = new Reservation(command.ReservationId, command.ParkingSpotId, command.BookerName, command.LicensePlate, command.ReservationDate);
+            weeklyParkingSpot.AddReservation(reservation, _clock.CurrentDate());
+            await _weeklyParkingSpotRepository.UpdateAsync(weeklyParkingSpot);
+            return reservation.ReservationId;
+        }
+
+        public async Task<bool> UpdateAsync(ChangeReservationLicencePlate command)
+        {
+            var weeklyParkingSpot = await GetWeeklyParkingSpotByReservationAsync(command.ReservationId);
+            if (weeklyParkingSpot is null)
+            {
+                return false;
+            }
+
+            var existingReservation = weeklyParkingSpot.Reservations.SingleOrDefault(x => x.ReservationId == command.ReservationId);
+            if (existingReservation is null)
+            {
+                return false;
+            }
+
+            if (existingReservation.ReservationDate <= _clock.CurrentDate())
+            {
+                return false;
+            }
+
+            existingReservation.ChangeLicensePlate(command.LicencePlate);
+            await _weeklyParkingSpotRepository.UpdateAsync(weeklyParkingSpot);
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(DeleteReservation command)
+        {
+            var weeklyParkingSpot = await GetWeeklyParkingSpotByReservationAsync(command.ReservationId);
+            if (weeklyParkingSpot is null)
+            {
+                return false;
+            }
+            var existingReservation = weeklyParkingSpot.Reservations.SingleOrDefault(x => x.ReservationId == command.ReservationId);
+            if (existingReservation is null)
+            {
+                return false;
+            }
+
+            weeklyParkingSpot.RemoveReservation(command.ReservationId);
+            await _weeklyParkingSpotRepository.UpdateAsync(weeklyParkingSpot);
+            return true;
+        }
+
+        private async Task<WeeklyParkingSpot> GetWeeklyParkingSpotByReservationAsync(Guid reservationId)
+        {
+            var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetAllWeeklyAsync();
+            return weeklyParkingSpots.SingleOrDefault(x => x.Reservations.Any(r => r.ReservationId == reservationId));
+        }
     }
 }
