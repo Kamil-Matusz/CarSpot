@@ -1,6 +1,7 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Core.Repositories;
 using CarSpot.Core.ValueObject;
+using CarSpot.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -78,5 +79,11 @@ namespace CarSpot.Infrastructure.DAL.Repositories
             _dbContext.Update(weeklyParkingSpot);
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<WeeklyParkingSpot>> GetByWeekAsync(DateTime toDate) 
+            => await _dbContext.WeeklyParkingSpots
+            .Include(x => x.Reservations)
+            .Where(x => x.ToDate == toDate)
+            .ToListAsync();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Core.ValueObject;
+using CarSpot.Core.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CarSpot.Core.Repositories
          void Delete(WeeklyParkingSpot weeklyParkingSpot);*/
         Task<WeeklyParkingSpot> GetAsync(ParkingSpotId id);
         Task<IEnumerable<WeeklyParkingSpot>> GetAllWeeklyAsync();
+        Task<IEnumerable<WeeklyParkingSpot>> GetByWeekAsync(DateTime toDate) => throw new NotImplementedException();
         Task AddAsync(WeeklyParkingSpot weeklyParkingSpot);
         Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot);
         Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot);

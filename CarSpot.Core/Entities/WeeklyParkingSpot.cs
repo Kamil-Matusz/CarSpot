@@ -21,7 +21,7 @@ namespace CarSpot.Api.Entities
             ParkingSpotName = parkingSpotName;
         }
 
-        public void AddReservation(Reservation reservation, DateTime now)
+        internal void AddReservation(Reservation reservation, DateTime now)
         {
             var isInvalidDate = reservation.ReservationDate.Date < FromDate || reservation.ReservationDate.Date > ToDate || reservation.ReservationDate.Date < now;
             if(isInvalidDate)
