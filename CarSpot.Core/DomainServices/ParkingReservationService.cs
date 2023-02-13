@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Core.Entities;
 using CarSpot.Core.Exceptions;
 using CarSpot.Core.Policies;
 using CarSpot.Core.ValueObjects;
@@ -21,7 +22,20 @@ namespace CarSpot.Core.DomainServices
             _policies = policies;
             _clock = clock;
         }
-        public void ReserveSpotForVehicle(IEnumerable<WeeklyParkingSpot> parkingSpots, JobTitle jobTitle, WeeklyParkingSpot parkingSpotToReserve, Reservation reservation)
+
+        public void ReserveParkingForCleaning(IEnumerable<WeeklyParkingSpot> allParkingSpots, Date date)
+        {
+            foreach (var parkingSpot in allParkingSpots)
+            {
+                var reservationsForSameDate = parkingSpot.Reservations.Where(x => x.ReservationDate == date);
+                parkingSpot.RemoveReservations(reservationsForSameDate);
+
+                var cleaningReservation = new CleaningReservation(ReservationId.Create(),parkingSpot.WeeklyParkingSpotId,date);
+                parkingSpot.AddReservation(cleaningReservation, new Date(_clock.CurrentDate()));
+            }
+        }
+
+        public void ReserveSpotForVehicle(IEnumerable<WeeklyParkingSpot> parkingSpots, JobTitle jobTitle, WeeklyParkingSpot parkingSpotToReserve, VehicleReservation reservation)
         {
             var parkingSpotId = parkingSpotToReserve.WeeklyParkingSpotId;
             var policy = _policies.SingleOrDefault(x => x.CanBeApplied(jobTitle));
@@ -36,7 +50,7 @@ namespace CarSpot.Core.DomainServices
                 throw new CannotReserveParkingSpotException(parkingSpotId);
             }
 
-            parkingSpotToReserve.AddReservation(reservation, _clock.CurrentDate());
+            parkingSpotToReserve.AddReservation(reservation, new Date(_clock.CurrentDate()));
         }
     }
 }

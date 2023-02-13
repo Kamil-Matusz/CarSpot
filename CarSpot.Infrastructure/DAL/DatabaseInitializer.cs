@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,9 +16,11 @@ namespace CarSpot.Infrastructure.DAL
     internal sealed class DatabaseInitializer : IHostedService
     {
         private readonly IServiceProvider _serviceProvider;
-        public DatabaseInitializer(IServiceProvider serviceProvider)
+        private readonly IClock _clock;
+        public DatabaseInitializer(IServiceProvider serviceProvider, IClock clock)
         {
             _serviceProvider = serviceProvider;
+            _clock = clock;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -34,9 +37,9 @@ namespace CarSpot.Infrastructure.DAL
                 var clock = new Clock();
                 weeklyParkingSpot = new List<WeeklyParkingSpot>()
                 {
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P1"),
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P2"),
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), clock.CurrentDate(), clock.CurrentDate().AddDays(7), "P3"),
+                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.CurrentDate()), "P1"),
+                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.CurrentDate()), "P2"),
+                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.CurrentDate()), "P3"),
                 };
                 dbContext.AddRange(weeklyParkingSpot);
                 dbContext.SaveChanges();

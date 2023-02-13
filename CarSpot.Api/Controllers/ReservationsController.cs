@@ -2,6 +2,7 @@
 using CarSpot.Api.DTO;
 using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Application.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarSpot.Api.Controllers
@@ -83,8 +84,8 @@ namespace CarSpot.Api.Controllers
             return Ok(reservation);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Post(CreateReservation command)
+        [HttpPost("vehicle")]
+        public async Task<ActionResult> Post(ReserveParkingSpotForVehicle command)
         {
             var id = await _reservationsService.CreateAsync(command with { ReservationId = Guid.NewGuid() });
             if (id is null)
@@ -93,6 +94,14 @@ namespace CarSpot.Api.Controllers
             }
 
             return CreatedAtAction(nameof(Get), new { ReservationId = id }, null);
+        }
+
+        [HttpPost("cleaning")]
+        public async Task<ActionResult> Post(ReserveParkingSpotForCleaning command)
+        {
+            await _reservationsService.ReserveForCleaningAsync(command);
+
+            return Ok();
         }
 
         [HttpPut("{id:guid}")]
