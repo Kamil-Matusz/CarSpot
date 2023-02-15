@@ -10,13 +10,15 @@ namespace CarSpot.Api.Entities
         public ParkingSpotId ParkingSpotId { get; private set; }
        /* public BookerName BookerName { get; private set; }
         public string LicensePlate { get; private set; }*/
+        public Capacity Capacity { get; private set; }
         public Date ReservationDate { get; private set; }
 
         protected Reservation() { }
-        public Reservation(Guid reservationId,ParkingSpotId parkingSpotId, Date reservationDate)
+        public Reservation(ReservationId reservationId,ParkingSpotId parkingSpotId,Capacity capacity ,Date reservationDate)
         {
             ReservationId = reservationId;
             ParkingSpotId= parkingSpotId;
+            Capacity = capacity;
             ReservationDate = reservationDate;
         }
 

@@ -16,6 +16,9 @@ namespace CarSpot.Infrastructure.DAL.Configurations
         {
             builder.Property(x => x.BookerName)
                 .HasConversion(x => x.Value, x => new BookerName(x));
+            builder.Property(x => x.Capacity)
+                .IsRequired()
+                .HasConversion(x => x.Value, x => new Capacity(x));
         }
     }
 }

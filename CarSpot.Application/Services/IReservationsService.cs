@@ -12,11 +12,11 @@ namespace CarSpot.Api.Services
          bool Update(ChangeReservationLicencePlate command);
          bool Delete(DeleteReservation command);*/
 
-        Task<ReservationDto> GetAsync(Guid id);
+        /*Task<ReservationDto> GetAsync(Guid id);
         Task<IEnumerable<ReservationDto>> GetAllWeeklyAsync();
         Task<Guid?> CreateAsync(ReserveParkingSpotForVehicle command);
         Task ReserveForCleaningAsync(ReserveParkingSpotForCleaning command);
         Task<bool> UpdateAsync(ChangeReservationLicencePlate command);
-        Task<bool> DeleteAsync(DeleteReservation command);
+        Task<bool> DeleteAsync(DeleteReservation command);*/
     }
 }

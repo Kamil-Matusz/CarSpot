@@ -14,7 +14,7 @@ namespace CarSpot.Core.Entities
         private CleaningReservation()
         {
         }
-        public CleaningReservation(ReservationId reservationId, ParkingSpotId parkingSpotId, Date reservationDate) : base(reservationId, parkingSpotId, reservationDate)
+        public CleaningReservation(ReservationId reservationId, ParkingSpotId parkingSpotId, Date reservationDate) : base(reservationId, parkingSpotId, 2 ,reservationDate)
         {
         }
     }

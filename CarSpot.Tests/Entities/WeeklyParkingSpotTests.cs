@@ -16,7 +16,7 @@ namespace CarSpot.Tests.Entities
         private readonly Date _now;
         public WeeklyParkingSpotTests()
         {
-            new WeeklyParkingSpot(Guid.NewGuid(), new Week(_clock.CurrentDate()), "P1");
+            WeeklyParkingSpot.Create(Guid.NewGuid(), new Week(_clock.CurrentDate()),"P1");
             _now = new Date(DateTime.Parse("2022-02-15"));
         }
 
@@ -24,7 +24,7 @@ namespace CarSpot.Tests.Entities
         public void given_reservation_for_already_existing_date_add_reservation_should_fail()
         {
             var reservationDate = _now.AddDays(1);
-            var reservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), "Joe Doe", "XYZ123", reservationDate);
+            var reservation = new VehicleReservation(Guid.NewGuid(), Guid.NewGuid(), "Joe Doe", "XYZ123",2, reservationDate);
             _weeklyParkingSpot.AddReservation(reservation, reservationDate);
 
             //ACT
@@ -40,7 +40,7 @@ namespace CarSpot.Tests.Entities
         {
             // Arrange
             var reservationDate = _now.AddDays(1);
-            var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.WeeklyParkingSpotId, "John Doe", "XYZ123", reservationDate);
+            var reservation = new VehicleReservation(Guid.NewGuid(), _weeklyParkingSpot.WeeklyParkingSpotId, "John Doe", "XYZ123", 2 ,reservationDate);
 
             // Act
             _weeklyParkingSpot.AddReservation(reservation, _now);
@@ -58,7 +58,7 @@ namespace CarSpot.Tests.Entities
             var invalidDate = DateTime.Parse(dateString);
 
             //ARRANGE
-            var reservation = new VehicleReservation(Guid.NewGuid(),_weeklyParkingSpot.WeeklyParkingSpotId, "Joe Doe", "XYZ123", new Date(invalidDate));
+            var reservation = new VehicleReservation(Guid.NewGuid(),_weeklyParkingSpot.WeeklyParkingSpotId, "Joe Doe", "XYZ123", 1 ,new Date(invalidDate));
 
             //ACT
             var exception = Record.Exception(() => _weeklyParkingSpot.AddReservation(reservation, _now));

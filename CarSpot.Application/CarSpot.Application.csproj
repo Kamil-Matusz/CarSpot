@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Scrutor" Version="4.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CarSpot.Core\CarSpot.Core.csproj" />
   </ItemGroup>
 

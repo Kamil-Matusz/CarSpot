@@ -15,7 +15,7 @@ namespace CarSpot.Core.Entities
         private VehicleReservation()
         {
         }
-        public VehicleReservation(ReservationId reservationId, ParkingSpotId parkingSpotId,BookerName bookerName, string licensePlate, Date reservationDate) : base(reservationId, parkingSpotId, reservationDate)
+        public VehicleReservation(ReservationId reservationId, ParkingSpotId parkingSpotId,BookerName bookerName, string licensePlate,Capacity capacity ,Date reservationDate) : base(reservationId, parkingSpotId,capacity ,reservationDate)
         {
             BookerName = bookerName;
             ChangeLicensePlate(licensePlate);

@@ -1,4 +1,6 @@
-﻿ namespace CarSpot.Api.Commands
+﻿using CarSpot.Application.Abstractions;
+
+namespace CarSpot.Api.Commands
 {
-    public record ReserveParkingSpotForVehicle(Guid ParkingSpotId,Guid ReservationId,string BookerName,string LicensePlate,DateTime ReservationDate);
+    public sealed record ReserveParkingSpotForVehicle(Guid ParkingSpotId,Guid ReservationId,string BookerName,string LicensePlate,int Capacity,DateTime ReservationDate) : ICommand;
 }

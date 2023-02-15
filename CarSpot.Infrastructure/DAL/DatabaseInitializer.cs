@@ -37,9 +37,9 @@ namespace CarSpot.Infrastructure.DAL
                 var clock = new Clock();
                 weeklyParkingSpot = new List<WeeklyParkingSpot>()
                 {
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.CurrentDate()), "P1"),
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.CurrentDate()), "P2"),
-                new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.CurrentDate()), "P3"),
+                WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.CurrentDate()), "P1"),
+                WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.CurrentDate()), "P2"),
+                WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.CurrentDate()), "P3"),
                 };
                 dbContext.AddRange(weeklyParkingSpot);
                 dbContext.SaveChanges();
