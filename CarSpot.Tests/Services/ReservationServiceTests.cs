@@ -1,6 +1,8 @@
 ﻿using CarSpot.Api.Commands;
 using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Core.DomainServices;
+using CarSpot.Core.Policies;
 using CarSpot.Core.Repositories;
 using CarSpot.Tests.Shared;
 using Shouldly;
@@ -45,6 +47,15 @@ namespace CarSpot.Tests.Services
         public ReservationServiceTests()
         {
            _clock = new TestClock();
+            _weeklyParkingSpotRepository = new InMemoryWeeklyParkingSpotRepository(_clock);
+            var parkingReservationService = new ParkingReservationService(new IReservationPolicy[]
+            {
+                new BossReservationPolicy(),
+                new ManagerReservationPolicy(),
+                new EmployeeReservationPolicy()
+            }, _clock);
+
+            _reservationsService = new ReservationsService(_clock, _weeklyParkingSpotRepository, parkingReservationService);
         }
 
         [Fact]
@@ -52,7 +63,7 @@ namespace CarSpot.Tests.Services
         {
             // Arrange
             var weeklyParkingSpot = (await _weeklyParkingSpotRepository.GetAllWeeklyAsync()).First();
-            var command = new CreateReservation(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "John Doe", "XYZ123", DateTime.UtcNow.AddDays(1));
+            var command = new ReserveParkingSpotForVehicle(Guid.Parse("00000000-0000-0000-0000-000000000001"), Guid.NewGuid(), "John Doe", "XYZ123", DateTime.UtcNow.AddDays(1));
 
             // Assert
             var reservationId = await _reservationsService.CreateAsync(command);

@@ -4,32 +4,23 @@ using CarSpot.Core.ValueObjects;
 
 namespace CarSpot.Api.Entities
 {
-    public class Reservation
+    public abstract  class Reservation
     {
-        public Guid ReservationId { get; private set; }
+        public ReservationId ReservationId { get; private set; }
         public ParkingSpotId ParkingSpotId { get; private set; }
-        public BookerName BookerName { get; private set; }
-        public string LicensePlate { get; private set; }
-        public DateTime ReservationDate { get; private set; }
+       /* public BookerName BookerName { get; private set; }
+        public string LicensePlate { get; private set; }*/
+        public Capacity Capacity { get; private set; }
+        public Date ReservationDate { get; private set; }
 
-        public Reservation(Guid reservationId,ParkingSpotId parkingSpotId, BookerName bookerName, string licensePlate, DateTime reservationDate)
+        protected Reservation() { }
+        public Reservation(ReservationId reservationId,ParkingSpotId parkingSpotId,Capacity capacity ,Date reservationDate)
         {
             ReservationId = reservationId;
             ParkingSpotId= parkingSpotId;
-            BookerName = bookerName;
-            ChangeLicensePlate(licensePlate);
+            Capacity = capacity;
             ReservationDate = reservationDate;
         }
 
-        public void ChangeLicensePlate(string licensePlate)
-        {
-            if (string.IsNullOrWhiteSpace(licensePlate))
-            {
-                throw new InvalidLicencePlateException(licensePlate);
-            }
-
-            LicensePlate = licensePlate;
-
-        }
     }
 }

@@ -5,6 +5,7 @@
         public Guid ReservationDtoId { get; set; }
         public Guid ParkingSpotId { get; set; }
         public string BookerName { get; set; }
+        public string Type { get; set; }
         public DateTime ReservationDate { get; set; }
     }
 }

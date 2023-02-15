@@ -25,22 +25,20 @@ namespace CarSpot.Infrastructure.DAL.Migrations
             modelBuilder.Entity("CarSpot.Api.Entities.Reservation", b =>
                 {
                     b.Property<Guid>("ReservationId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("BookerName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LicensePlate")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("ParkingSpotId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("ReservationDate")
+                    b.Property<DateTimeOffset>("ReservationDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("WeeklyParkingSpotId")
                         .HasColumnType("uuid");
@@ -50,27 +48,50 @@ namespace CarSpot.Infrastructure.DAL.Migrations
                     b.HasIndex("WeeklyParkingSpotId");
 
                     b.ToTable("Reservations");
+
+                    b.HasDiscriminator<string>("Type").HasValue("Reservation");
                 });
 
             modelBuilder.Entity("CarSpot.Api.Entities.WeeklyParkingSpot", b =>
                 {
                     b.Property<Guid>("WeeklyParkingSpotId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("FromDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<int>("Capacity")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ParkingSpotName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("ToDate")
+                    b.Property<DateTimeOffset>("Week")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("WeeklyParkingSpotId");
 
                     b.ToTable("WeeklyParkingSpots");
+                });
+
+            modelBuilder.Entity("CarSpot.Core.Entities.CleaningReservation", b =>
+                {
+                    b.HasBaseType("CarSpot.Api.Entities.Reservation");
+
+                    b.HasDiscriminator().HasValue("CleaningReservation");
+                });
+
+            modelBuilder.Entity("CarSpot.Core.Entities.VehicleReservation", b =>
+                {
+                    b.HasBaseType("CarSpot.Api.Entities.Reservation");
+
+                    b.Property<string>("BookerName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LicensePlate")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("VehicleReservation");
                 });
 
             modelBuilder.Entity("CarSpot.Api.Entities.Reservation", b =>

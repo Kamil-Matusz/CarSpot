@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Core.Entities;
 using CarSpot.Core.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace CarSpot.Core.Policies
         {
             var totalReservations = weeklyParkingSpots
                 .SelectMany(x => x.Reservations)
+                .OfType<VehicleReservation>()
                 .Count(x => x.BookerName == bookerName);
 
             return totalReservations < 2;

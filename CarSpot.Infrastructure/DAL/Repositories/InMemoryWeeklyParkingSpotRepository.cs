@@ -1,6 +1,7 @@
 ﻿using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
 using CarSpot.Core.ValueObject;
+using CarSpot.Core.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,9 @@ namespace CarSpot.Core.Repositories
             _clock = clock;
             _weeklyParkingSpots = new List<WeeklyParkingSpot>()
             {
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000001"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P1"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000002"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P2"),
-            new WeeklyParkingSpot(Guid.Parse("00000000-0000-0000-0000-000000000003"), _clock.CurrentDate(), _clock.CurrentDate().AddDays(7), "P3"),
+            WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000001"), new Week(_clock.CurrentDate()), "P1"),
+            WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000002"), new Week(_clock.CurrentDate()), "P2"),
+            WeeklyParkingSpot.Create(Guid.Parse("00000000-0000-0000-0000-000000000003"), new Week(_clock.CurrentDate()), "P3"),
             };
         }
         public Task AddAsync(WeeklyParkingSpot weeklyParkingSpot)

@@ -1,8 +1,10 @@
 ﻿
 using CarSpot.Api.Services;
+using CarSpot.Application.Abstractions;
 using CarSpot.Infrastructure.DAL;
 using CarSpot.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -20,7 +22,15 @@ namespace CarSpot.Infrastructure
             services.AddSingleton<ExceptionMiddleware>();
             services
                 .AddSingleton<IClock,Clock>()
-                .AddPostgres(configuration);
+            .AddPostgres(configuration);
+
+
+            var infrastructureAssembly = typeof(AppOptions).Assembly;
+
+            services.Scan(s => s.FromAssemblies(infrastructureAssembly)
+                .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime());
 
             return services;
         }

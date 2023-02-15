@@ -2,20 +2,25 @@
 using CarSpot.Api.DTO;
 using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
+using CarSpot.Application.Abstractions;
+using CarSpot.Application.Commands;
+using CarSpot.Application.DTO;
+using CarSpot.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarSpot.Api.Controllers
 {
     [ApiController]
-    [Route("reservations")]
+    [Route("parking-spots")]
     public class ReservationsController : ControllerBase
     {
+        /*
         private readonly IReservationsService _reservationsService;
         public ReservationsController(IReservationsService reservationsService)
         {
             _reservationsService = reservationsService;
         }
-        /* public ReservationsController(IReservationsService reservationsService)
+         public ReservationsController(IReservationsService reservationsService)
          {
              _reservationsService= reservationsService;
          }
@@ -69,53 +74,59 @@ namespace CarSpot.Api.Controllers
              return NotFound();
          }
      }*/
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservationDto>>> GetAll() => Ok(await _reservationsService.GetAllWeeklyAsync());
 
-        [HttpGet("{id:guid}")]
-        public async Task<ActionResult<ReservationDto>> Get(Guid id)
+        private readonly ICommandHandler<ReserveParkingSpotForVehicle> _reserveParkingSpotsForVehicleHandler;
+        private readonly ICommandHandler<ReserveParkingSpotForCleaning> _reserveParkingSpotsForCleaningHandler;
+        private readonly ICommandHandler<ChangeReservationLicencePlate> _changeReservationLicencePlateHandler;
+        private readonly ICommandHandler<DeleteReservation> _deleteReservationHandler;
+        private readonly IQueryHandler<GetWeeklyParkingSpots, IEnumerable<WeeklyParkingSpotDto>>_getWeeklyParkingSpotsHandler;
+
+        public ReservationsController(ICommandHandler<ReserveParkingSpotForVehicle> reserveParkingSpotsForVehicleHandler,
+            ICommandHandler<ReserveParkingSpotForCleaning> reserveParkingSpotsForCleaningHandler,
+            ICommandHandler<ChangeReservationLicencePlate> changeReservationLicencePlateHandler,
+            ICommandHandler<DeleteReservation> deleteReservationHandler, IQueryHandler<GetWeeklyParkingSpots, IEnumerable<WeeklyParkingSpotDto>> getWeeklyParkingSpotsHandler)
         {
-            var reservation = await _reservationsService.GetAsync(id);
-            if (reservation is null)
-            {
-                return NotFound();
-            }
-            return Ok(reservation);
+            _reserveParkingSpotsForVehicleHandler = reserveParkingSpotsForVehicleHandler;
+            _reserveParkingSpotsForCleaningHandler = reserveParkingSpotsForCleaningHandler;
+            _changeReservationLicencePlateHandler = changeReservationLicencePlateHandler;
+            _deleteReservationHandler = deleteReservationHandler;
+            _getWeeklyParkingSpotsHandler = getWeeklyParkingSpotsHandler;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Post(CreateReservation command)
-        {
-            var id = await _reservationsService.CreateAsync(command with { ReservationId = Guid.NewGuid() });
-            if (id is null)
-            {
-                return BadRequest();
-            }
+        [HttpGet("reservations")]
+        public async Task<ActionResult<IEnumerable<WeeklyParkingSpotDto>>> Get([FromQuery] GetWeeklyParkingSpots query)
+        => Ok(await _getWeeklyParkingSpotsHandler.HandleAsync(query));
 
-            return CreatedAtAction(nameof(Get), new { ReservationId = id }, null);
+        [HttpPost("{parkingSpotId:guid}/reservations/vehicle")]
+        public async Task<ActionResult> Post(Guid parkingSpotId, ReserveParkingSpotForVehicle command)
+        {
+            await _reserveParkingSpotsForVehicleHandler.HandlerAsync(command with
+            {
+                ReservationId = Guid.NewGuid(),
+                ParkingSpotId = parkingSpotId,
+            });
+            return NoContent();
         }
 
-        [HttpPut("{id:guid}")]
-        public async Task<ActionResult> Put(Guid id, ChangeReservationLicencePlate command)
+        [HttpPost("reservations/cleaning")]
+        public async Task<ActionResult> Post(ReserveParkingSpotForCleaning command)
         {
-
-            if (await _reservationsService.UpdateAsync(command with { ReservationId = id }))
-            {
-                return NoContent();
-            }
-
-            return NotFound();
+            await _reserveParkingSpotsForCleaningHandler.HandlerAsync(command);
+            return NoContent();
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<ActionResult> Delete(Guid id)
+        [HttpPut("reservations/{reservationId:guid}")]
+        public async Task<ActionResult> Put(Guid reservationId, ChangeReservationLicencePlate command)
         {
-            if (await _reservationsService.DeleteAsync(new DeleteReservation(id)))
-            {
-                return NoContent();
-            }
+            await _changeReservationLicencePlateHandler.HandlerAsync(command with { ReservationId = reservationId });
+            return NoContent();
+        }
 
-            return NotFound();
+        [HttpDelete("reservations/{reservationId:guid}")]
+        public async Task<ActionResult> Delete(Guid reservationId)
+        {
+            await _deleteReservationHandler.HandlerAsync(new DeleteReservation(reservationId));
+            return NoContent();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CarSpot.Api.Commands;
 using CarSpot.Api.DTO;
+using CarSpot.Application.Commands;
 
 namespace CarSpot.Api.Services
 {
@@ -11,10 +12,11 @@ namespace CarSpot.Api.Services
          bool Update(ChangeReservationLicencePlate command);
          bool Delete(DeleteReservation command);*/
 
-        Task<ReservationDto> GetAsync(Guid id);
+        /*Task<ReservationDto> GetAsync(Guid id);
         Task<IEnumerable<ReservationDto>> GetAllWeeklyAsync();
-        Task<Guid?> CreateAsync(CreateReservation command);
+        Task<Guid?> CreateAsync(ReserveParkingSpotForVehicle command);
+        Task ReserveForCleaningAsync(ReserveParkingSpotForCleaning command);
         Task<bool> UpdateAsync(ChangeReservationLicencePlate command);
-        Task<bool> DeleteAsync(DeleteReservation command);
+        Task<bool> DeleteAsync(DeleteReservation command);*/
     }
 }
