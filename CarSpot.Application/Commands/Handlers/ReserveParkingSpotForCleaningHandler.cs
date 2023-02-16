@@ -31,6 +31,8 @@ namespace CarSpot.Application.Commands.Handlers
 
             var tasks = weeklyParkingSpots.Select(x => _repository.UpdateAsync(x));
             await Task.WhenAll(tasks);
+
+
         }
     }
 }

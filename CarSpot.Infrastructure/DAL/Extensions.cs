@@ -1,4 +1,7 @@
-﻿using CarSpot.Core.Repositories;
+﻿using CarSpot.Application.Abstractions;
+using CarSpot.Application.Commands;
+using CarSpot.Core.Repositories;
+using CarSpot.Infrastructure.DAL.Decorators;
 using CarSpot.Infrastructure.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +30,10 @@ namespace CarSpot.Infrastructure.DAL
 
             services.AddDbContext<CarSpotDbContext>(x => x.UseNpgsql(options.connectionString));
             services.AddScoped<IWeeklyParkingSpotRepository, PostgresWeeklyParkingSpotRepository>();
+            // decorator pattern
+            services.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
+            services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+
             services.AddHostedService<DatabaseInitializer>();
             AppContext.SetSwitch("Npg.EnableLegacyTimestampBehavior", true);
 
