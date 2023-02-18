@@ -34,6 +34,9 @@ namespace CarSpot.Infrastructure.DAL
             services.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
             services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
 
+            // user repository
+            services.AddScoped<IUserRepository, PostgresUserRepository>();
+
             services.AddHostedService<DatabaseInitializer>();
             AppContext.SetSwitch("Npg.EnableLegacyTimestampBehavior", true);
 

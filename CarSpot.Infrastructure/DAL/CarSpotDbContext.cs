@@ -1,4 +1,5 @@
 ﻿using CarSpot.Api.Entities;
+using CarSpot.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
@@ -13,6 +14,8 @@ namespace CarSpot.Infrastructure.DAL
     {
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<WeeklyParkingSpot> WeeklyParkingSpots { get; set; }
+        public DbSet<User> Users { get; set; }
+
 
         public CarSpotDbContext(DbContextOptions<CarSpotDbContext> options) : base(options) { }
 
