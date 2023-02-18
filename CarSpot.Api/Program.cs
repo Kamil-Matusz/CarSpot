@@ -5,6 +5,7 @@ using CarSpot.Core;
 using CarSpot.Infrastructure;
 using CarSpot.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +16,22 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddControllers();
+
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+{
+    loggerConfiguration.WriteTo
+        .Console();
+    // .WriteTo
+    // .File("logs.txt")
+    // .WriteTo
+    // .Seq("http://localhost:5341");
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 
 var app = builder.Build();
 

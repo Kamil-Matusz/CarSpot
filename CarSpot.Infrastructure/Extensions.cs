@@ -3,6 +3,7 @@ using CarSpot.Api.Services;
 using CarSpot.Application.Abstractions;
 using CarSpot.Infrastructure.DAL;
 using CarSpot.Infrastructure.Exceptions;
+using CarSpot.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -22,8 +23,11 @@ namespace CarSpot.Infrastructure
             services.AddSingleton<ExceptionMiddleware>();
             services
                 .AddSingleton<IClock,Clock>()
-            .AddPostgres(configuration);
+                .AddPostgres(configuration);
 
+
+            services
+                .AddCustomLogging();
 
             var infrastructureAssembly = typeof(AppOptions).Assembly;
 
