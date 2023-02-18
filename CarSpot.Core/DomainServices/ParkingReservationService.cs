@@ -30,8 +30,9 @@ namespace CarSpot.Core.DomainServices
                 var reservationsForSameDate = parkingSpot.Reservations.Where(x => x.ReservationDate == date);
                 parkingSpot.RemoveReservations(reservationsForSameDate);
 
-                var cleaningReservation = new CleaningReservation(ReservationId.Create(),parkingSpot.WeeklyParkingSpotId,date);
-                parkingSpot.AddReservation(cleaningReservation, new Date(_clock.CurrentDate()));
+                /*var cleaningReservation = new CleaningReservation(ReservationId.Create(),parkingSpot.WeeklyParkingSpotId,date);
+                parkingSpot.AddReservation(cleaningReservation, new Date(_clock.CurrentDate()));*/
+                parkingSpot.AddReservation(new CleaningReservation(ReservationId.Create(), date),new Date(_clock.CurrentDate()));
             }
         }
 

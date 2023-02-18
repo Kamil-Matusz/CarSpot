@@ -12,17 +12,19 @@ namespace CarSpot.Core.Entities
 {
     public sealed class VehicleReservation : Reservation
     {
+        public UserId UserId { get; private set; }
+        public BookerName BookerName { get; private set; }
+        public string LicensePlate { get; private set; }
+
         private VehicleReservation()
         {
         }
-        public VehicleReservation(ReservationId reservationId, ParkingSpotId parkingSpotId,BookerName bookerName, string licensePlate,Capacity capacity ,Date reservationDate) : base(reservationId, parkingSpotId,capacity ,reservationDate)
+        public VehicleReservation(ReservationId reservationId, UserId userId,BookerName bookerName, string licensePlate,Capacity capacity ,Date reservationDate) : base(reservationId,capacity ,reservationDate)
         {
+            UserId = userId;
             BookerName = bookerName;
             ChangeLicensePlate(licensePlate);
         }
-
-        public BookerName BookerName { get; private set; }
-        public string LicensePlate { get; private set; }
 
         public void ChangeLicensePlate(string licensePlate)
         {

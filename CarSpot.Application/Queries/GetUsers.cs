@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarSpot.Application.Queries
 {
-    public class GetUsers : IQuery<IEnumerable<UserDTO>>
+    public class GetUsers : IQuery<IEnumerable<UserDto>>
     {
 
     }
