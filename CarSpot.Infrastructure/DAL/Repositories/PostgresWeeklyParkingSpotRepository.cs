@@ -52,13 +52,13 @@ namespace CarSpot.Infrastructure.DAL.Repositories
         public async Task AddAsync(WeeklyParkingSpot weeklyParkingSpot)
         {
             await _dbContext.AddAsync(weeklyParkingSpot);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(WeeklyParkingSpot weeklyParkingSpot)
         {
             _dbContext.Remove(weeklyParkingSpot);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public Task<WeeklyParkingSpot> GetAsync(ParkingSpotId id) => _dbContext.WeeklyParkingSpots
@@ -74,10 +74,11 @@ namespace CarSpot.Infrastructure.DAL.Repositories
             return result.AsEnumerable();
         }
 
-        public async Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot)
+        public Task UpdateAsync(WeeklyParkingSpot weeklyParkingSpot)
         {
             _dbContext.Update(weeklyParkingSpot);
-            await _dbContext.SaveChangesAsync();
+            return Task.CompletedTask;
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<WeeklyParkingSpot>> GetByWeekAsync(Week week) 

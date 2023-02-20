@@ -20,6 +20,7 @@ namespace CarSpot.Application.Commands.Handlers
         private readonly IClock _clock;
         private readonly IWeeklyParkingSpotRepository _weeklyParkingSpotRepository;
         private readonly IParkingReservationService _parkingReservationService;
+        private readonly IUserRepository _userRepository;
 
         public ReserveParkingSpotForVehicleHandler(IClock clock, IWeeklyParkingSpotRepository weeklyParkingSpotRepository, IParkingReservationService parkingReservationService)
         {
@@ -30,7 +31,7 @@ namespace CarSpot.Application.Commands.Handlers
 
         public async Task HandlerAsync(ReserveParkingSpotForVehicle command)
         {
-            var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
+            /*var parkingSpotId = new ParkingSpotId(command.ParkingSpotId);
             var week = new Week(_clock.CurrentDate());
             var weeklyParkingSpots = await _weeklyParkingSpotRepository.GetByWeekAsync(week);
             var parkingSpotToReserve = weeklyParkingSpots.SingleOrDefault(x => x.WeeklyParkingSpotId == parkingSpotId);
@@ -42,6 +43,31 @@ namespace CarSpot.Application.Commands.Handlers
             var reservation = new VehicleReservation(command.ReservationId, command.ParkingSpotId, command.BookerName, command.LicensePlate, command.Capacity, new Date(command.ReservationDate));
 
             _parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Employee, parkingSpotToReserve, reservation);
+
+            await _weeklyParkingSpotRepository.UpdateAsync(parkingSpotToReserve);*/
+
+            var (spotId, reservationId, userId, licencePlate, capacity, date) = command;
+            var week = new Week(_clock.CurrentDate());
+            var parkingSpotId = new ParkingSpotId(spotId);
+            var weeklyParkingSpots = (await _weeklyParkingSpotRepository.GetByWeekAsync(week)).ToList();
+            var parkingSpotToReserve = weeklyParkingSpots.SingleOrDefault(x => x.WeeklyParkingSpotId == parkingSpotId);
+
+            if (parkingSpotToReserve is null)
+            {
+                throw new WeeklyParkingSpotNotFoundException(spotId);
+            }
+
+            var user = await _userRepository.GetByIdAsync(userId);
+            if (user is null)
+            {
+                throw new UserNotFoundException(userId);
+            }
+
+            var reservation = new VehicleReservation(reservationId, user.UserId, new BookerName(user.FullName),
+                licencePlate, capacity, new Date(date));
+
+            _parkingReservationService.ReserveSpotForVehicle(weeklyParkingSpots, JobTitle.Employee,
+                parkingSpotToReserve, reservation);
 
             await _weeklyParkingSpotRepository.UpdateAsync(parkingSpotToReserve);
         }

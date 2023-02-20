@@ -19,8 +19,7 @@ namespace CarSpot.Infrastructure.DAL.Configurations
             builder.HasKey(x => x.ReservationId);
             builder.Property(x => x.ReservationId)
             .HasConversion(x => x.Value, x => new ReservationId(x));
-            builder.Property(x => x.ParkingSpotId)
-                .HasConversion(x => x.Value, x => new ParkingSpotId(x));
+           
             builder.Property(x => x.Capacity)
                 .IsRequired()
                 .HasConversion(x => x.Value, x => new Capacity(x));

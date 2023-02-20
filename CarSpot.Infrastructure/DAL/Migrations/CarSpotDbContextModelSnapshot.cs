@@ -30,9 +30,6 @@ namespace CarSpot.Infrastructure.DAL.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ParkingSpotId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTimeOffset>("ReservationDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -72,6 +69,50 @@ namespace CarSpot.Infrastructure.DAL.Migrations
                     b.ToTable("WeeklyParkingSpots");
                 });
 
+            modelBuilder.Entity("CarSpot.Core.Entities.User", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("CarSpot.Core.Entities.CleaningReservation", b =>
                 {
                     b.HasBaseType("CarSpot.Api.Entities.Reservation");
@@ -91,6 +132,11 @@ namespace CarSpot.Infrastructure.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("UserId");
+
                     b.HasDiscriminator().HasValue("VehicleReservation");
                 });
 
@@ -99,6 +145,15 @@ namespace CarSpot.Infrastructure.DAL.Migrations
                     b.HasOne("CarSpot.Api.Entities.WeeklyParkingSpot", null)
                         .WithMany("Reservations")
                         .HasForeignKey("WeeklyParkingSpotId");
+                });
+
+            modelBuilder.Entity("CarSpot.Core.Entities.VehicleReservation", b =>
+                {
+                    b.HasOne("CarSpot.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarSpot.Api.Entities.WeeklyParkingSpot", b =>

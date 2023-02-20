@@ -14,6 +14,10 @@ namespace CarSpot.Infrastructure.DAL.Configurations
     {
         public void Configure(EntityTypeBuilder<VehicleReservation> builder)
         {
+            builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
+            builder.Property(x => x.UserId)
+                .IsRequired()
+                .HasConversion(x => x.Value, x => new UserId(x));
             builder.Property(x => x.BookerName)
                 .HasConversion(x => x.Value, x => new BookerName(x));
             builder.Property(x => x.Capacity)
