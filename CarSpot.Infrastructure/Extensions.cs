@@ -1,6 +1,7 @@
 ﻿
 using CarSpot.Api.Services;
 using CarSpot.Application.Abstractions;
+using CarSpot.Infrastructure.Auth;
 using CarSpot.Infrastructure.DAL;
 using CarSpot.Infrastructure.Exceptions;
 using CarSpot.Infrastructure.Logging;
@@ -23,6 +24,7 @@ namespace CarSpot.Infrastructure
         {
             services.AddSingleton<ExceptionMiddleware>();
             services.AddSecurity();
+            services.AddHttpContextAccessor();
             services
                 .AddSingleton<IClock,Clock>()
                 .AddPostgres(configuration);
@@ -38,13 +40,28 @@ namespace CarSpot.Infrastructure
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
 
+            services.AddAuth(configuration);
+
+
             return services;
         }
 
         public static WebApplication UseInfrastructure(this WebApplication app)
         {
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.MapControllers();
             return app;
+        }
+
+        public static T GetOptions<T>(this IConfiguration configuration, string sectionName) where T : class, new()
+        {
+            var options = new T();
+            var section = configuration.GetRequiredSection(sectionName);
+            section.Bind(options);
+
+            return options;
         }
     }
 }
