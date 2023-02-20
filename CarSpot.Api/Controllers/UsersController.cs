@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarSpot.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {

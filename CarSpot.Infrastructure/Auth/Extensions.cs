@@ -41,7 +41,13 @@ namespace CarSpot.Infrastructure.Auth
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(authorization =>
+            {
+                authorization.AddPolicy("is_admin",policy =>
+                {
+                    policy.RequireRole("admin");
+                });
+            });
 
             return services;
         }
