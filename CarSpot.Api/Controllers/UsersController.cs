@@ -41,6 +41,39 @@ namespace CarSpot.Api.Controllers
             return Ok(jwt);
         }
 
+        /*
+        [Authorize(Policy = "is-admin")]
+        [HttpGet("{userId:guid}")]
+        public async Task<ActionResult<UserDto>> Get(Guid userId)
+        {
+            var user = await _getUserHandler.HandleAsync(new GetUser { UserId = userId });
+            if (user is null)
+            {
+                return NotFound();
+            }
 
+            return user;
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<UserDto>> Get()
+        {
+            if (string.IsNullOrWhiteSpace(User.Identity?.Name))
+            {
+                return NotFound();
+            }
+
+            var userId = Guid.Parse(User.Identity?.Name);
+            var user = await _getUserHandler.HandleAsync(new GetUser { UserId = userId });
+
+            return user;
+        }
+
+        [HttpGet]
+        [Authorize(Policy = "is-admin")]
+        public async Task<ActionResult<IEnumerable<UserDto>>> Get([FromQuery] GetUsers query)
+            => Ok(await _getUsersHandler.HandleAsync(query));
+        */
     }
 }
