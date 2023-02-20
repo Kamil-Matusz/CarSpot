@@ -28,13 +28,5 @@ namespace CarSpot.Infrastructure.DAL.Handlers
                ReservationDate = x.ReservationDate.Value.Date
            })
        };
-
-        public static UserDto AsDto(this User entity)
-        => new()
-        {
-            UserId = entity.UserId,
-            Username = entity.Username,
-            Fullname = entity.FullName
-        };
     }
 }
