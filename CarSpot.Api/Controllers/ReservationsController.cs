@@ -7,6 +7,7 @@ using CarSpot.Application.Commands;
 using CarSpot.Application.DTO;
 using CarSpot.Application.Queries;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CarSpot.Api.Controllers
 {
@@ -94,10 +95,16 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpGet("reservations")]
+        [SwaggerOperation("Displaying all reservations")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<WeeklyParkingSpotDto>>> Get([FromQuery] GetWeeklyParkingSpots query)
         => Ok(await _getWeeklyParkingSpotsHandler.HandleAsync(query));
 
         [HttpPost("{parkingSpotId:guid}/reservations/vehicle")]
+        [SwaggerOperation("Creating reservation for the vehicle")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Post(Guid parkingSpotId, ReserveParkingSpotForVehicle command)
         {
             await _reserveParkingSpotsForVehicleHandler.HandlerAsync(command with
@@ -109,6 +116,9 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpPost("reservations/cleaning")]
+        [SwaggerOperation("Creating reservation for the cleaning parkingspots")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Post(ReserveParkingSpotForCleaning command)
         {
             await _reserveParkingSpotsForCleaningHandler.HandlerAsync(command);
@@ -116,6 +126,9 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpPut("reservations/{reservationId:guid}")]
+        [SwaggerOperation("Change vehicle license plate")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Put(Guid reservationId, ChangeReservationLicencePlate command)
         {
             await _changeReservationLicencePlateHandler.HandlerAsync(command with { ReservationId = reservationId });
@@ -123,6 +136,9 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpDelete("reservations/{reservationId:guid}")]
+        [SwaggerOperation("Delete reservation for the vehicle")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Delete(Guid reservationId)
         {
             await _deleteReservationHandler.HandlerAsync(new DeleteReservation(reservationId));

@@ -5,11 +5,11 @@ using CarSpot.Application.Queries;
 using CarSpot.Application.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CarSpot.Api.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
@@ -25,6 +25,9 @@ namespace CarSpot.Api.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation("Create the user account")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> SignUp(SignUp command)
         {
             command = command with { UserId = Guid.NewGuid() };
@@ -34,6 +37,9 @@ namespace CarSpot.Api.Controllers
         }
         
         [HttpPost("sign-in")]
+        [SwaggerOperation("Sign in the user and return the JSON Web Token")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<JwtDto>> SignIn(SignIn command)
         {
             await _signInHandler.HandlerAsync(command);

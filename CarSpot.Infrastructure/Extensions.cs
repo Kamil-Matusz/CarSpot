@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,16 @@ namespace CarSpot.Infrastructure
 
             services.AddAuth(configuration);
 
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.EnableAnnotations();
+                swagger.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "CarSpot",
+                    Version = "v1",
+                });
+            });
 
             return services;
         }
@@ -49,6 +60,10 @@ namespace CarSpot.Infrastructure
         public static WebApplication UseInfrastructure(this WebApplication app)
         {
             app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
