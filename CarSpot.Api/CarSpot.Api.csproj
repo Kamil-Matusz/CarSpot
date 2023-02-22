@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -17,5 +17,9 @@
   <ItemGroup>
     <ProjectReference Include="..\CarSpot.Infrastructure\CarSpot.Infrastructure.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="CarSpot.IntegrationTests" />
+	</ItemGroup>
 
 </Project>

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CarSpot.Infrastructure": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:52091;http://localhost:52092"
+    }
+  }
+}

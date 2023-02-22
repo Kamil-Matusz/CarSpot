@@ -11,7 +11,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include="CarSpot.Tests"/>
+		<InternalsVisibleTo Include="CarSpot.UnitTests"/>
 	</ItemGroup>
 
 </Project>

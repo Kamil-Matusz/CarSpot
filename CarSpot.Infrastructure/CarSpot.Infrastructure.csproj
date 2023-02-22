@@ -34,7 +34,8 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<InternalsVisibleTo Include="CarSpot.Tests" />
+		<InternalsVisibleTo Include="CarSpot.UnitTests" />
+		<InternalsVisibleTo Include="CarSpot.IntegrationTests" />
 	</ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using CarSpot.Tests.Shared;
 using Shouldly;
 using Xunit;
 
-namespace CarSpot.Tests.Services
+namespace CarSpot.UnitTests.Services
 {
     public class ReservationServiceTests
     {
