@@ -86,10 +86,10 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Application\\CarSpot.Application.csproj",
-        "projectName": "CarSpot.IntegrationTests",
+        "projectName": "CarSpot.Application",
         "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Application\\CarSpot.Application.csproj",
         "packagesPath": "C:\\Users\\Kamil\\.nuget\\packages\\",
-        "outputPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.IntegrationTests\\obj\\",
+        "outputPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Kamil\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -106,8 +106,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj": {
-                "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Api\\CarSpot.Api.csproj"
+              "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj": {
+                "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj"
               }
             }
           }
@@ -121,6 +121,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Scrutor": {
+              "target": "Package",
+              "version": "[4.2.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -132,6 +138,11 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
@@ -223,9 +234,6 @@
             "projectReferences": {
               "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Application\\CarSpot.Application.csproj": {
                 "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Application\\CarSpot.Application.csproj"
-              },
-              "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj": {
-                "projectPath": "D:\\Back-End\\C#\\ASP .NET\\ASP .NET Web API\\CarSpot\\CarSpot.Core\\CarSpot.Core.csproj"
               }
             }
           }

@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarSpot.Application\CarSpot.Application.csproj" />
-    <ProjectReference Include="..\CarSpot.Core\CarSpot.Core.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

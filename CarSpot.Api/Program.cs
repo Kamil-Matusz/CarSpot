@@ -1,10 +1,5 @@
-using CarSpot.Api.Entities;
-using CarSpot.Api.Services;
 using CarSpot.Application;
-using CarSpot.Core;
 using CarSpot.Infrastructure;
-using CarSpot.Infrastructure.DAL;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -15,10 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSpot.Infrastructure", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarSpot.IntegrationTests", "CarSpot.IntegrationTests\CarSpot.IntegrationTests.csproj", "{A186E5FF-4669-428B-B9DE-A63E27972BF9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8490722E-03E7-4C2E-9B49-2BF0C112B59A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{9357B7A7-37E2-4582-A8C1-F52A225326E8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,14 +48,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{2DF05471-4E98-4957-8BA1-9985D7509E9E} = {9357B7A7-37E2-4582-A8C1-F52A225326E8}
-		{94DE1D08-12AC-460E-905B-BE842D6F686A} = {8490722E-03E7-4C2E-9B49-2BF0C112B59A}
-		{966623AE-A4C1-4C01-A7F9-358C6514DE6F} = {9357B7A7-37E2-4582-A8C1-F52A225326E8}
-		{1A91E50E-F6EB-4238-BEDA-D76460E99FD6} = {9357B7A7-37E2-4582-A8C1-F52A225326E8}
-		{71BBE2F8-469D-450D-B0C9-9F04CBC639DC} = {9357B7A7-37E2-4582-A8C1-F52A225326E8}
-		{A186E5FF-4669-428B-B9DE-A63E27972BF9} = {8490722E-03E7-4C2E-9B49-2BF0C112B59A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45114860-5924-42A5-86FE-3988561E5499}
