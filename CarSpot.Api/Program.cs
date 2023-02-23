@@ -1,10 +1,17 @@
+using CarSpot.Api;
 using CarSpot.Api.Entities;
 using CarSpot.Api.Services;
 using CarSpot.Application;
+using CarSpot.Application.Abstractions;
+using CarSpot.Application.Commands;
+using CarSpot.Application.DTO;
+using CarSpot.Application.Queries;
 using CarSpot.Core;
 using CarSpot.Infrastructure;
 using CarSpot.Infrastructure.DAL;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,7 +57,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
+app.UseUsersApi();
 
 app.Run();
