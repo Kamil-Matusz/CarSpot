@@ -1,4 +1,5 @@
 using CarSpot.Application;
+using CarSpot.Core;
 using CarSpot.Infrastructure;
 using Serilog;
 
