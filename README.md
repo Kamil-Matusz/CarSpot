@@ -10,7 +10,7 @@ A test project in which I tried to apply SOLID and the principles of clean archi
 - Docker
 
 # Swagger
-![](/git_images/arspot_api.JPG)
+![](/git_images/carspot_api.JPG)
 
 # Graphic diagram of database
 ![](/git_images/CarSpot.png)
